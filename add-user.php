@@ -1,6 +1,9 @@
 <?php
 
 include 'header-init.php';
+include 'jwt-helper.php';
+
+
 
 //tansformer le JSON en objet PHP contenant les informations de l'utilisateur
 $json = file_get_contents('php://input');
@@ -14,7 +17,7 @@ $request->execute(["email" => $user->email]);
 $existingUser = $request->fetch();
 
 if ($existingUser) {
-    http_response_code(409); //note : 409 = CONFLICT
+    http_response_code(409);
     echo '{"message" : "Cet email est déjà utilisé"}';
     exit();
 }

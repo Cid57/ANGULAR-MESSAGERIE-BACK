@@ -1,6 +1,15 @@
 <?php
 
 include 'header-init.php';
+include 'jwt-helper.php';
+
+$user = extractJwtBody();
+
+if ($user->role != "Administrateur") {
+    http_response_code(403);
+    echo '{"message" : "Vous n\avez pas les droits nécessaires"}';
+    exit();
+}
 
 if (!isset($_GET['id'])) {
     echo '{"message" : "il n\'y a pas d\'identiant dans l\'URL"}';
